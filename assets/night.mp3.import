@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/night.mp3-520238ee7d40d77862e231c7a0cc6c9d.mp3str"
+
+[deps]
+
+source_file="res://assets/night.mp3"
+dest_files=[ "res://.import/night.mp3-520238ee7d40d77862e231c7a0cc6c9d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

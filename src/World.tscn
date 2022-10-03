@@ -1,0 +1,127 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tilesets/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://src/BlackScreen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Game.gd" type="Script" id=4]
+[ext_resource path="res://src/Ground.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/bg.png" type="Texture" id=6]
+[ext_resource path="res://assets/main_theme.tres" type="Theme" id=7]
+[ext_resource path="res://assets/Deathridge Demo.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://assets/night.mp3" type="AudioStream" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+extra_spacing_top = 2
+extra_spacing_char = 1
+font_data = ExtResource( 8 )
+
+[node name="World" type="Node2D"]
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 640.0 ],
+"_edit_vertical_guides_": [ -560.0 ]
+}
+ground_tilemap = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="."]
+modulate = Color( 1, 0.619608, 0.619608, 1 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -465.0
+margin_top = 191.0
+margin_right = -27.0
+margin_bottom = 482.0
+theme = ExtResource( 7 )
+text = "RUN away from this place.
+Every 10 seconds the lights will turn off. STOP.
+OR YOU'LL DIE.
+The lights will turn on again. RUN. AGAIN.
+But don't stop earlier than the last time.
+OR YOU'LL DIE."
+
+[node name="BgLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="BgLayer"]
+margin_left = -560.0
+margin_top = -320.0
+margin_right = 1360.0
+margin_bottom = 760.0
+texture = ExtResource( 6 )
+
+[node name="GameLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="BlackScreen" parent="GameLayer" instance=ExtResource( 3 )]
+visible = false
+
+[node name="LastStop" type="Label" parent="GameLayer"]
+margin_left = 12.0
+margin_top = 561.0
+margin_right = 106.0
+margin_bottom = 585.0
+theme = ExtResource( 7 )
+text = "Last stop: -"
+
+[node name="GameOver" type="VBoxContainer" parent="GameLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 87.0
+margin_top = 4.0
+margin_right = -87.0
+margin_bottom = -4.0
+theme = ExtResource( 7 )
+alignment = 1
+
+[node name="LabelGameOver" type="Label" parent="GameLayer/GameOver"]
+modulate = Color( 0.898039, 0, 0, 1 )
+margin_right = 850.0
+margin_bottom = 252.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "GAME OVER"
+align = 1
+valign = 2
+
+[node name="LabelScore" type="Label" parent="GameLayer/GameOver"]
+margin_top = 256.0
+margin_right = 850.0
+margin_bottom = 508.0
+size_flags_vertical = 3
+text = "You've run: %s seconds"
+align = 1
+
+[node name="LabelRestart" type="Label" parent="GameLayer/GameOver"]
+margin_top = 512.0
+margin_right = 850.0
+margin_bottom = 592.0
+rect_min_size = Vector2( 0, 80 )
+size_flags_vertical = 1
+text = "Press SPACE to restart"
+align = 1
+valign = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( -434, 454 )
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="Wall" type="TileMap" parent="Tiles"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 80, 80 )
+format = 1
+tile_data = PoolIntArray( -262151, 0, 0, -196615, 0, 0, -131079, 0, 0, -65543, 0, 0, -7, 0, 0, 65529, 0, 0, 131065, 0, 0, 196601, 0, 0, 262137, 0, 0, 327673, 0, 0, 393209, 0, 0, 458745, 0, 0 )
+
+[node name="Ground" parent="Tiles" instance=ExtResource( 5 )]
+unique_name_in_owner = true
+position = Vector2( -480, 480 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true

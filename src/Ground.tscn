@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/tilesets/tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://src/Ground.gd" type="Script" id=2]
+[ext_resource path="res://assets/light.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 80, 72 )
+
+[node name="Ground" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 80, 80 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 1040, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -88 )
+shape = SubResource( 1 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 2080, 0 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 1040, -400 )
+scale = Vector2( 2.03125, 1 )
+texture = ExtResource( 3 )
+texture_scale = 2.0
+color = Color( 0.921569, 0.729412, 0.0784314, 1 )
+range_layer_min = -1
+shadow_enabled = true
+shadow_gradient_length = 4.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
